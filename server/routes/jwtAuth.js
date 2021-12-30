@@ -5,6 +5,7 @@ const jwtGenerator = require('../utils/jwtGenerator');
 
 // middleware
 const validInfo = require('../middleware/validInfo');
+const authorization = require('../middleware/authorization');
 
 //register API
 // validInfo is the middleware to run before hitting the routes
@@ -85,5 +86,13 @@ router.post('/login', validInfo, async (req, res) => {
   }
 });
 
+// check whether the user is verified during refresh etc...
+router.get('/is-verify', authorization, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 // create a router
 module.exports = router;
